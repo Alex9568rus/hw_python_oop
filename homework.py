@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Type
 
 
 class InfoMessage:
@@ -100,10 +100,6 @@ class SportsWalking(Training):
         super().__init__(action, duration, weight)
         self.height: float = height
 
-    def get_mean_speed(self) -> float:
-        """Получить среднюю скорость движения."""
-        return super().get_mean_speed()
-
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         calor: float = (
@@ -132,10 +128,6 @@ class Swimming(Training):
         self.length_pool: float = length_pool
         self.count_pool: float = count_pool
 
-    def get_distance(self) -> float:
-        """Получить дистанцию в км."""
-        return (self.action * self.LEN_STEP / self.M_IN_KM)
-
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
         mean_speed: float = (
@@ -154,7 +146,7 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: List[float]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    naming: Dict[str, Training] = {
+    naming: Dict[str, Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
